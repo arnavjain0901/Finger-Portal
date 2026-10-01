@@ -1,0 +1,496 @@
+/* =====================================================
+   FINGER PORTAL — FUTURISTIC HUD
+   ===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #020308;
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+/* =====================================================
+   APP
+   ===================================================== */
+
+#app {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #020308;
+}
+
+
+/* =====================================================
+   CAMERA
+   ===================================================== */
+
+#video {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transform: scaleX(-1);
+
+    filter:
+        brightness(0.72)
+        contrast(1.12)
+        saturate(0.85);
+
+    z-index: 1;
+}
+
+
+/* =====================================================
+   CANVAS
+   ===================================================== */
+
+#canvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+
+/* =====================================================
+   DARK CINEMATIC VIGNETTE
+   ===================================================== */
+
+#app::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            transparent 35%,
+            rgba(0, 0, 0, 0.15) 60%,
+            rgba(0, 0, 0, 0.72) 100%
+        );
+}
+
+
+/* =====================================================
+   SCANLINES
+   ===================================================== */
+
+#app::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 4;
+
+    pointer-events: none;
+
+    opacity: 0.16;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0px,
+            transparent 3px,
+            rgba(255, 255, 255, 0.035) 4px
+        );
+}
+
+
+/* =====================================================
+   HUD
+   ===================================================== */
+
+#ui {
+    position: absolute;
+
+    top: 28px;
+    left: 30px;
+
+    z-index: 10;
+
+    width: 310px;
+
+    padding: 20px 22px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(8, 12, 22, 0.78),
+            rgba(3, 5, 12, 0.48)
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+
+    border-left: 2px solid rgba(255, 255, 255, 0.7);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.45),
+        inset 0 0 30px rgba(255, 255, 255, 0.025);
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 14px),
+        calc(100% - 14px) 100%,
+        0 100%
+    );
+}
+
+
+/* =====================================================
+   TITLE
+   ===================================================== */
+
+#ui h1 {
+    font-size: 22px;
+
+    font-weight: 700;
+
+    letter-spacing: 5px;
+
+    margin-bottom: 14px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+#status {
+    position: relative;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    padding-left: 16px;
+
+    margin-bottom: 10px;
+}
+
+
+#status::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    transform: translateY(-50%);
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 6px rgba(255, 255, 255, 0.9),
+        0 0 14px rgba(255, 255, 255, 0.55);
+
+    animation: statusPulse 1.5s infinite;
+}
+
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: translateY(-50%) scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.15);
+    }
+}
+
+
+/* =====================================================
+   FILTER NAME
+   ===================================================== */
+
+#filterName {
+    margin-top: 14px;
+
+    padding: 9px 12px;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.055);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   CONTROLS
+   ===================================================== */
+
+.hint {
+    margin-top: 16px;
+
+    font-size: 10px;
+
+    line-height: 1.7;
+
+    letter-spacing: 1.2px;
+
+    color: rgba(255, 255, 255, 0.42);
+
+    text-transform: uppercase;
+}
+
+
+.hint b {
+    color: rgba(255, 255, 255, 0.9);
+
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   CORNER HUD MARKERS
+   ===================================================== */
+
+#app {
+    --hud-line: rgba(255, 255, 255, 0.42);
+}
+
+
+/* Top-left */
+#app .corner-tl {
+    position: absolute;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 700px) {
+
+    #ui {
+        top: 16px;
+        left: 16px;
+
+        width: 260px;
+
+        padding: 16px;
+    }
+
+    #ui h1 {
+        font-size: 17px;
+
+        letter-spacing: 3px;
+    }
+
+    #status,
+    #filterName {
+        font-size: 10px;
+    }
+
+    .hint {
+        font-size: 9px;
+    }
+}
+
+
+/* =====================================================
+   ADVANCED HUD
+   ===================================================== */
+
+.system-line,
+.hud-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 7px 0;
+
+    font-size: 10px;
+
+    letter-spacing: 1.8px;
+
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.system-line strong,
+.hud-line strong {
+    color: rgba(255, 255, 255, 0.9);
+
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+}
+
+
+/* SYSTEM DOT */
+
+.system-line {
+    position: relative;
+
+    justify-content: flex-start;
+
+    gap: 9px;
+
+    margin-bottom: 5px;
+}
+
+.system-line strong {
+    margin-left: auto;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 6px #ffffff,
+        0 0 14px rgba(255, 255, 255, 0.7);
+
+    animation: hudDotPulse 1.4s infinite;
+}
+
+@keyframes hudDotPulse {
+
+    0%,
+    100% {
+        opacity: 0.45;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* DIVIDER */
+
+.hud-divider {
+    width: 100%;
+    height: 1px;
+
+    margin: 12px 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.18),
+            transparent
+        );
+}
+
+
+/* FILTER LABEL */
+
+.filter-label {
+    font-size: 9px;
+
+    letter-spacing: 2.5px;
+
+    color: rgba(255, 255, 255, 0.38);
+
+    margin-bottom: 7px;
+}
+
+
+/* FILTER BOX */
+
+#filterName {
+    display: block;
+
+    margin: 0;
+
+    padding: 10px 12px;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    color: #ffffff;
+
+    background:
+        rgba(255, 255, 255, 0.055);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        inset 0 0 12px rgba(255, 255, 255, 0.025);
+}
+
+
+/* STATUS MESSAGE */
+
+.status-message {
+    margin-top: 10px;
+
+    font-size: 9px;
+
+    letter-spacing: 1.6px;
+
+    color: rgba(255, 255, 255, 0.45);
+
+    text-transform: uppercase;
+}
