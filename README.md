@@ -1,276 +1,286 @@
-\# 🖐️ Finger Portal
+# 🖐️ FINGER PORTAL
 
-
+### ✨ Turn your hands into a portal.
 
 A real-time browser-based computer vision experiment that transforms the space between your hands into an interactive visual portal.
 
+Built with **MediaPipe Hands + JavaScript + HTML5 Canvas**, Finger Portal tracks your fingertips, constructs a dynamic portal between your hands, and fills it with real-time visual effects.
 
+> **No app. No build system. Just open the camera and create a portal.**
 
-Built using \*\*MediaPipe Hands, JavaScript, HTML5 Canvas, and WebRTC\*\*, Finger Portal detects the thumb and index fingertips of both hands and uses them to construct a dynamic four-point portal.
+---
 
+## 🎬 What is Finger Portal?
 
+Finger Portal is an interactive computer-vision experiment designed around a simple idea:
 
-\## ✨ Features
+**What if your hands could open a portal?**
 
+The webcam tracks both hands in real time. Your thumb and index fingertips become four control points, which are used to construct the portal.
 
+Move your hands → the portal moves.
 
-\* Real-time webcam processing
+Change your fingers → the portal changes shape.
 
-\* Two-hand tracking with MediaPipe Hands
+Press `F` → the portal transforms.
 
-\* Thumb + index fingertip tracking
+---
 
-\* Dynamic four-point portal geometry
+## ⚡ Features
 
-\* Real-time visual filters
+| Feature                   | Description                                    |
+| ------------------------- | ---------------------------------------------- |
+| 🖐️ **Two-Hand Tracking** | Real-time tracking of up to two hands          |
+| 🎯 **4-Point Portal**     | Thumb + index fingertips define the portal     |
+| 🌀 **Dynamic Geometry**   | Portal shape changes naturally with your hands |
+| ✨ **Animated Glow**       | Pulsing portal border with dynamic lighting    |
+| 🎯 **Finger Markers**     | Crosshair-style fingertip tracking indicators  |
+| ⚡ **Energy Particles**    | Moving particles travel around the portal      |
+| 🎨 **Live Filters**       | Multiple visual effects inside the portal      |
+| 🖥️ **Futuristic HUD**    | Live system, hand and portal status            |
+| 🚀 **One-Click Launch**   | Start the entire project with `start.bat`      |
 
-\* Animated glowing portal border
+---
 
-\* Finger tracking markers and crosshairs
+## 🎨 Portal Modes
 
-\* Moving energy particles around the portal
+Press **`F`** to cycle through the visual effects.
 
-\* Futuristic HUD interface
+### ▦ GRID
 
-\* Smooth portal-point interpolation
+A digital grid transforms the portal into a futuristic scanning window.
 
-\* Browser-based — no build tools required
+### ▪ PIXELATED
 
-\* One-click Windows launcher
+A low-resolution pixel effect creates a digital distortion inside the portal.
 
+### ⠿ HALFTONE
 
+A dot-based halftone effect gives the portal a stylized graphic appearance.
 
-\## 🎨 Visual Filters
+### 💗 PINK DUOTONE
 
+A strong duotone treatment transforms the camera feed into a vibrant visual effect.
 
+### ❄️ FROSTED
 
-Press `F` to cycle through the available portal effects:
+A blurred, glass-like effect creates a frosted portal window.
 
+---
 
-
-\* Grid
-
-\* Pixelated
-
-\* Halftone
-
-\* Pink Duotone
-
-\* Frosted
-
-
-
-\## 🕹️ Controls
-
-
-
-| Key | Action               |
-
-| --- | -------------------- |
-
-| `F` | Change portal filter |
-
-| `Q` | Stop camera          |
-
-
-
-\## 🛠️ Tech Stack
-
-
-
-\* \*\*HTML5\*\*
-
-\* \*\*CSS3\*\*
-
-\* \*\*JavaScript\*\*
-
-\* \*\*MediaPipe Hands\*\*
-
-\* \*\*HTML5 Canvas\*\*
-
-\* \*\*WebRTC / getUserMedia\*\*
-
-\* \*\*OpenCV\*\* for the original computer-vision prototype
-
-
-
-\## 🚀 Running the Project
-
-
-
-\### Option 1 — Windows
-
-
-
-Double-click:
-
-
+## 🧠 Computer Vision Pipeline
 
 ```text
-
-start.bat
-
+             WEBCAM
+                │
+                ▼
+       ┌─────────────────┐
+       │  MediaPipe Hands │
+       └────────┬────────┘
+                │
+                ▼
+        Detect Both Hands
+                │
+                ▼
+     ┌─────────────────────┐
+     │ Thumb + Index Tips  │
+     │      4 Points       │
+     └──────────┬──────────┘
+                │
+                ▼
+        Point Sorting
+                │
+                ▼
+       Position Smoothing
+                │
+                ▼
+      Portal Quadrilateral
+                │
+          ┌─────┴─────┐
+          ▼           ▼
+       Filter      Particles
+          │           │
+          └─────┬─────┘
+                ▼
+         Animated Portal
+                │
+                ▼
+          FUTURISTIC HUD
 ```
 
+---
 
+## 🔬 How It Works
 
-The local server will start and the project will open automatically in your browser.
+Finger Portal uses **MediaPipe Hands** to detect hand landmarks from the webcam.
 
-
-
-\### Option 2 — Manual
-
-
-
-Open a terminal in the project folder:
-
-
-
-```bash
-
-cd C:\\Users\\sonuj\\Desktop\\finger\_portal
-
-```
-
-
-
-Start the local server:
-
-
-
-```bash
-
-python -m http.server 8000
-
-```
-
-
-
-Then open:
-
-
+For each hand, two landmarks are extracted:
 
 ```text
+Thumb Tip   → Landmark 4
+Index Tip   → Landmark 8
+```
 
+With two hands detected, the application gets four points:
+
+```text
+Hand 1 → Thumb + Index
+Hand 2 → Thumb + Index
+```
+
+These four points form the corners of the portal.
+
+The points are then:
+
+1. Sorted into a consistent order
+2. Smoothed to reduce jitter
+3. Used to create a clipped polygon
+4. Filled with the selected visual filter
+5. Surrounded by an animated glowing border
+6. Enhanced with fingertip markers
+7. Decorated with moving energy particles
+
+All of this happens in real time inside the browser.
+
+---
+
+## 🛠️ Built With
+
+**Core**
+
+* HTML5
+* CSS3
+* JavaScript
+
+**Computer Vision**
+
+* MediaPipe Hands
+
+**Graphics**
+
+* HTML5 Canvas
+* Canvas 2D API
+
+**Camera**
+
+* WebRTC
+* `getUserMedia()`
+
+**Prototype**
+
+* Python
+* OpenCV
+
+---
+
+## 🚀 Run It
+
+### Windows — One Click
+
+The easiest way to start:
+
+```text
+Double-click → start.bat
+```
+
+The script starts the local server and opens:
+
+```text
 http://127.0.0.1:8000
-
 ```
 
+Allow camera access when prompted.
 
+### Manual Launch
 
-Allow camera access when the browser asks.
+Open a terminal inside the project folder:
 
+```bash
+python -m http.server 8000
+```
 
-
-\## 📁 Project Structure
-
-
+Then visit:
 
 ```text
-
-Finger-Portal/
-
-│
-
-├── index.html
-
-├── script.js
-
-├── style.css
-
-├── main.py
-
-├── start.bat
-
-├── .gitignore
-
-└── README.md
-
+http://127.0.0.1:8000
 ```
 
+---
 
+## 🎮 Controls
 
-\## 🧠 How It Works
+```text
+┌─────────┬──────────────────────┐
+│    F    │   Change Filter      │
+├─────────┼──────────────────────┤
+│    Q    │   Stop Camera        │
+└─────────┴──────────────────────┘
+```
 
+---
 
+## 📁 Project Structure
 
-Finger Portal uses MediaPipe Hands to detect up to two hands from the webcam.
+```text
+Finger-Portal/
+│
+├── 📄 index.html
+├── 📜 script.js
+├── 🎨 style.css
+├── 🐍 main.py
+├── ▶️ start.bat
+├── 🚫 .gitignore
+└── 📖 README.md
+```
 
+---
 
+## 💡 Why I Built This
 
-For each detected hand, the application extracts:
+This project started as an experiment with **computer vision and interactive visual effects**.
 
+Instead of simply detecting hands and displaying landmarks, I wanted to turn hand tracking into something that actually feels interactive.
 
+The result is a browser-based experience where your hands become the interface.
 
-\* Thumb tip — landmark `4`
+**Computer vision doesn't have to be just detection. It can be interaction.**
 
-\* Index fingertip — landmark `8`
+---
 
+## 🔮 Possible Future Experiments
 
+* More portal effects
+* Custom hand gestures for interaction
+* Portal distortion and shader effects
+* Sound-reactive visuals
+* Gesture-controlled UI
+* Multiple portal modes
+* WebGL-based effects
+* AR-style environment interaction
 
-With both hands detected, these four points become the corners of the portal.
+---
 
+## 📌 Project Status
 
+**🟢 Complete — Ready for Demonstration**
 
-The application then:
+The current version includes real-time hand tracking, dynamic portal geometry, multiple filters, animated effects, particles, and a futuristic HUD.
 
+---
 
+## 👤 Author
 
-1\. Detects the hands.
+### Arnav Jain
 
-2\. Extracts the four fingertip points.
-
-3\. Sorts the points into a consistent polygon.
-
-4\. Smooths the point positions.
-
-5\. Creates a clipped portal region.
-
-6\. Applies the selected visual filter.
-
-7\. Draws the animated portal border.
-
-8\. Adds fingertip markers and moving particles.
-
-9\. Updates the futuristic HUD in real time.
-
-
-
-\## 🎯 Project Goal
-
-
-
-This project explores how browser-based computer vision can be combined with creative visual effects to create an interactive augmented-reality-style experience without requiring a traditional application build system.
-
-
-
-\## 📌 Status
-
-
-
-\*\*Complete — ready for demonstration and further experimentation.\*\*
-
-
-
-\## 👤 Author
-
-
-
-\*\*Arnav Jain\*\*
-
-
+Computer Vision • AI • Creative Coding
 
 GitHub:
+**https://github.com/arnavjain0901**
 
-https://github.com/arnavjain0901
+---
 
+### ⭐ If you like the project
 
+Give the repository a ⭐ and experiment with the portal yourself.
 
-\---
-
-
-
-⭐ If you find the project interesting, feel free to explore the code and experiment with the effects.
-
-
-
+**Open your hands. Create something.**
